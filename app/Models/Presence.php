@@ -14,5 +14,11 @@ class Presence extends Model
         'user_id',
         'type',
         'is_approved',
+        'time'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'npp',
         'supervisor_npp',
+        'time'
     ];
 
     /**
@@ -33,4 +34,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    protected $dates = ['time'];
+
 }

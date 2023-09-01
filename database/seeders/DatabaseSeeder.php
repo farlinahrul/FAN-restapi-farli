@@ -17,7 +17,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create();
+        User::factory()->state(
+            new Sequence(
+                fn($sequence) => [
+                    'email' => 'user@mail.com',
+                ]
+            )
+        )
+            ->create()->each(function ($item) {
+                Presence::factory()->state(
+                    new Sequence(
+                        fn($sequence) => [
+                            'user_id' => $item,
+                            'type'    => "IN",
+                            'time'    => now()->subtract("hour", 1),
+                        ]
+                    )
+                )->create();
+                Presence::factory()->state(
+                    new Sequence(
+                        fn($sequence) => [
+                            'user_id' => $item,
+                            'type'    => "OUT",
+                            'time'    => now(),
+                        ]
+                    )
+                )->create();
+            });
         User::factory(10)->state(
             new Sequence(
                 fn($sequence) => [
@@ -29,8 +55,20 @@ class DatabaseSeeder extends Seeder
                 new Sequence(
                     fn($sequence) => [
                         'user_id' => $item,
+                        'type'    => "IN",
+                        'time'    => now()->subtract("hour", 1),
                     ]
                 )
+            )->create();
+            Presence::factory()->state(
+                new Sequence(
+                    fn($sequence) => [
+                        'user_id' => $item,
+                        'type'    => "OUT",
+                        'time'    => now(),
+                    ]
+                )
+
             )->create();
         });
     }

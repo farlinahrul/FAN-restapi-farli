@@ -22,7 +22,7 @@ class LoginController extends Controller
 
         if ($verifiedPassword) {
             $query = http_build_query([
-                'client_id'             => '9a07af27-ee55-4ffc-8d2b-e9231bff8241',
+                'client_id'             => '9a07e012-1c73-4aa2-9abe-1e49e95457a6',
                 'redirect_uri'          => config('app.url') . '/api/v1/auth/callback',
                 'response_type'         => 'code',
                 'scope'                 => '',

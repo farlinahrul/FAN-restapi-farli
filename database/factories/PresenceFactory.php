@@ -21,7 +21,7 @@ class PresenceFactory extends Factory
             'user_id'     => User::all()->random()->id,
             'type'        => "IN",
             'is_approved' => fake()->boolean(50),
-            'created_at'  => fake()->time()
+            'time'        => fake()->dateTime()
         ];
     }
 }
