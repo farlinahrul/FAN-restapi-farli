@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('email');
             $table->string('password');
             $table->integer('npp');
-            $table->integer('npp_supervisor')->nullable();
+            $table->integer('supervisor_npp')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

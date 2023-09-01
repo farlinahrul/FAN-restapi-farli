@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->uuid('user_id')->nullable();
             $table->enum('type', ['IN', 'OUT']);
-            $table->boolean('is_approved')->default(false);
+            $table->boolean('is_approved')->default(0);
             $table->timestampsTz();
             $table->softDeletes();
 
