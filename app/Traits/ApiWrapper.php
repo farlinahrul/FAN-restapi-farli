@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Traits;
 
-class ApiFormatter
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+
+trait ApiWrapper
 {
-    public static function response($code = 200, $message = "Success", $data = [], $meta = [])
+    public function successResponse($data = [], $meta = [], $message = "Success")
     {
         if ($data) {
             $data = ['data' => $data];
@@ -13,14 +16,14 @@ class ApiFormatter
             $meta = ['meta' => $meta];
         }
         return response()->json([
-            'code'    => $code,
+            'success' => true,
             'message' => $message,
             ...$meta ?? [],
             ...$data ?? ['data' => null],
-        ], $code);
+        ], Response::HTTP_OK);
     }
 
-    public static function paginateResponses($code = 200, $message = "Success", $data = null, $meta = null)
+    public function successPaginateResponse($data = null, $meta = null, $message = "Success")
     {
         if ($data) {
             $data = $data->toArray();
@@ -42,7 +45,7 @@ class ApiFormatter
             $data = ['data' => $data['data']];
         }
         return response()->json([
-            'code'    => $code,
+            'success' => true,
             'message' => $message,
             'meta'    => [
                 ...$currentPage ?? [],
@@ -53,18 +56,16 @@ class ApiFormatter
             ],
             ...$data ?? [],
 
-        ], $code);
+        ], Response::HTTP_OK);
     }
-    public static function responses($code = 200, $message = "Success", $data = null, $meta = null) : \Illuminate\Http\JsonResponse
+
+    public function errorResponse($code = Response::HTTP_NOT_FOUND, string $message)
     {
-        if ($meta) {
-            $meta = ['meta' => $meta];
-        }
         return response()->json([
-            'code'    => $code,
-            'message' => $message,
-            ...$meta ?? [],
-            'data'    => $data,
+            'data' => [
+                'success' => false,
+                'message' => $message
+            ]
         ], $code);
     }
 }
